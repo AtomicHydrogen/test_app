@@ -1,0 +1,25 @@
+<!-- templates/verify.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>QAuth – Verify Code</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="card">
+    <h1>Verify Your Code</h1>
+    <form method="post">
+      <input name="email" type="email" placeholder="you@example.com" required>
+      <input name="token" type="number" placeholder="6-digit code" required>
+      <button type="submit">Verify</button>
+    </form>
+    {% if message %}
+      <div class="message">{{ message }}</div>
+    {% endif %}
+    <p style="margin-top:1rem; font-size:0.9rem;">
+      Need a new QR? <a href="/">Generate here</a>
+    </p>
+  </div>
+</body>
+</html>

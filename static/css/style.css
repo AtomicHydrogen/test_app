@@ -1,0 +1,72 @@
+/* static/css/style.css */
+body {
+  background-color: #f5f5f5;
+  font-family: "Roboto", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 2rem;
+  max-width: 360px;
+  width: 100%;
+  text-align: center;
+}
+
+h1 {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+input[type="email"],
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+button {
+  background-color: #4285f4;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #357ae8;
+}
+
+.qr-img {
+  margin: 1rem auto;
+  width: 200px;
+  height: 200px;
+}
+
+.secret {
+  font-family: monospace;
+  background: #f1f3f4;
+  padding: 0.5rem;
+  border-radius: 4px;
+  word-break: break-all;
+  margin-bottom: 1rem;
+}
+
+.message {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: #d93025; /* red-ish for errors */
+}

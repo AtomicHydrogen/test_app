@@ -1,0 +1,21 @@
+<!-- templates/index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>QAuth – Generate QR</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="card">
+    <h1>Set up QAuth Authenticator</h1>
+    <form method="post">
+      <input name="email" type="email" placeholder="you@example.com" required>
+      <button type="submit">Generate QR Code</button>
+    </form>
+    <p style="margin-top:1rem; font-size:0.9rem;">
+      Already have a secret? <a href="/verify">Verify your code</a>
+    </p>
+  </div>
+</body>
+</html>

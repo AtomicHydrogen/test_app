@@ -1,0 +1,20 @@
+<!-- templates/show_qr.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>QAuth – Your QR Code</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="card">
+    <h1>Scan with Authenticator</h1>
+    <img src="{{ qr_data }}" alt="QR code" class="qr-img">
+    <div class="secret">{{ secret }}</div>
+    <a href="/"><button>Generate Another</button></a>
+    <p style="margin-top:1rem; font-size:0.9rem;">
+      <a href="/verify">Or verify your code</a>
+    </p>
+  </div>
+</body>
+</html>
