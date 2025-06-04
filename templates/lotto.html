@@ -1,0 +1,24 @@
+<!-- templates/lotto.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Quantum Lotto – Enter Your Guess</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="card">
+    <h1>Quantum Lotto</h1>
+    {% if error %}
+      <div class="message">{{ error }}</div>
+    {% endif %}
+    <form method="post">
+      <input name="guess" type="text" placeholder="Enter 4-digit code" maxlength="4" required>
+      <button type="submit">Draw!</button>
+    </form>
+    <p style="margin-top:1rem; font-size:0.9rem;">
+      <a href="/logout">Log out</a>
+    </p>
+  </div>
+</body>
+</html>

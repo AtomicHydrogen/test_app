@@ -1,4 +1,6 @@
 /* static/css/style.css */
+
+/* ─── GLOBAL BODY & CARD STYLING ────────────────────────────────────────────── */
 body {
   background-color: #f5f5f5;
   font-family: "Roboto", sans-serif;
@@ -25,6 +27,7 @@ h1 {
   color: #333;
 }
 
+/* ─── INPUT FIELDS & BUTTONS ────────────────────────────────────────────────── */
 input[type="email"],
 input[type="text"],
 input[type="number"] {
@@ -34,6 +37,7 @@ input[type="number"] {
   border-radius: 4px;
   margin-bottom: 1rem;
   font-size: 1rem;
+  box-sizing: border-box;
 }
 
 button {
@@ -50,6 +54,7 @@ button:hover {
   background-color: #357ae8;
 }
 
+/* ─── QR IMAGE & SECRET DISPLAY ─────────────────────────────────────────────── */
 .qr-img {
   margin: 1rem auto;
   width: 200px;
@@ -65,8 +70,61 @@ button:hover {
   margin-bottom: 1rem;
 }
 
+/* ─── ERROR / MESSAGE STYLING ───────────────────────────────────────────────── */
 .message {
   margin-top: 1rem;
   font-size: 0.95rem;
   color: #d93025; /* red-ish for errors */
+}
+
+/* ─── LOTTO RESULT SPECIFIC ─────────────────────────────────────────────────── */
+/* (You will notice some of these already appear inline in result.html) */
+
+.big‐guess {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 3rem;
+  letter-spacing: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.drawn‐digits {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+.digit‐slot {
+  width: 2.5rem;
+  height: 3.5rem;
+  border: 2px solid #333;
+  border-radius: 4px;
+  margin: 0 0.5rem;
+  font-size: 2rem;
+  text-align: center;
+  line-height: 3.5rem;
+  background-color: #fff;
+  color: #000;
+  visibility: hidden; /* revealed later by JS */
+}
+
+.bloch‐container {
+  text-align: center;
+  margin: 1rem auto;
+}
+
+.bloch‐sphere {
+  width: 150px;
+  height: 150px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.prize‐message {
+  font-size: 1.25rem;
+  margin-top: 1rem;
+  /* text-color is set dynamically in JS depending on prize */
 }
