@@ -5,79 +5,38 @@
   <meta charset="utf-8">
   <title>Quantum Lotto – Result</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-  <style>
-    /* Extra CSS for the result page */
-    .big‐guess {
-      font-family: 'Courier New', Courier, monospace;
-      font-size: 3rem;
-      letter-spacing: 0.5rem;
-      margin-bottom: 1rem;
-    }
-    .drawn‐digits {
-      display: flex;
-      justify-content: center;
-      margin: 1rem 0;
-    }
-    .digit‐slot {
-      width: 2.5rem;
-      height: 3.5rem;
-      border: 2px solid #333;
-      border-radius: 4px;
-      margin: 0 0.5rem;
-      font-size: 2rem;
-      text-align: center;
-      line-height: 3.5rem;
-      background-color: #fff;
-      visibility: hidden; /* revealed by JS */
-    }
-    .bloch‐container {
-      text-align: center;
-      margin: 1rem auto;
-    }
-    .bloch‐sphere {
-      width: 150px;
-      height: 150px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
-    .prize‐message {
-      font-size: 1.25rem;
-      margin-top: 1rem;
-      /* color set by JS depending on prize */
-    }
-  </style>
 </head>
 <body>
   <div class="card">
     <h1>Quantum Lotto Result</h1>
 
-    <!-- 1) Show the user’s guess as big blocks -->
-    <div class="big‐guess">
-      {{ guess[0] }} {{ guess[1] }} {{ guess[2] }} {{ guess[3] }}
+    <!-- 1) Show the user’s original guess in four boxes -->
+    <div class="guess-digits">
+      <div class="guess-slot">{{ guess[0] }}</div>
+      <div class="guess-slot">{{ guess[1] }}</div>
+      <div class="guess-slot">{{ guess[2] }}</div>
+      <div class="guess-slot">{{ guess[3] }}</div>
     </div>
 
     <!-- 2) Bloch sphere spinner -->
-    <div class="bloch‐container">
+    <div class="bloch-container">
       <img
         src="{{ url_for('static', filename='images/bloch_sphere.png') }}"
         alt="Spinning Bloch Sphere"
-        class="bloch‐sphere"
+        class="bloch-sphere"
         id="blochSphere">
     </div>
 
-    <!-- 3) Four hidden slots for the drawn digits -->
-    <div class="drawn‐digits">
-      <div class="digit‐slot" id="digit0">0</div>
-      <div class="digit‐slot" id="digit1">0</div>
-      <div class="digit‐slot" id="digit2">0</div>
-      <div class="digit‐slot" id="digit3">0</div>
+    <!-- 3) Four hidden “digit slots” for the drawn number -->
+    <div class="drawn-digits">
+      <div class="digit-slot" id="digit0">0</div>
+      <div class="digit-slot" id="digit1">0</div>
+      <div class="digit-slot" id="digit2">0</div>
+      <div class="digit-slot" id="digit3">0</div>
     </div>
 
-    <!-- 4) Placeholder for the prize message -->
-    <div class="prize‐message" id="prizeMessage"></div>
+    <!-- 4) Prize message appears here after reveal -->
+    <div class="prize-message" id="prizeMessage"></div>
 
     <p style="margin-top:1rem; font-size:0.9rem;">
       <a href="/lotto"><button>Play Again</button></a>
@@ -86,27 +45,25 @@
     </p>
   </div>
 
+  <!-- XeedQ Logo Watermark (bottom-right) -->
+  <img
+    src="{{ url_for('static', filename='images/xeedq_logo.png') }}"
+    alt="XeedQ Logo Watermark"
+    class="watermark">
+
+  <!-- JS to reveal each digit, color green on match / red otherwise -->
   <script>
-    // These get injected by Flask as raw strings:
-    let drawnNumber = "{{ drawn }}";   // e.g. "7425"
-    let userGuess   = "{{ guess }}";   // e.g. "7525"
-    let prizeCode   = "{{ prize }}";   // "grand", "merch", or "none"
-
-    // Trim whitespace just in case:
-    drawnNumber = drawnNumber.trim();
-    userGuess   = userGuess.trim();
-
-    // Debug in the console:
-    console.log("drawnNumber =", drawnNumber);
-    console.log("userGuess   =", userGuess);
+    let drawnNumber = "{{ drawn }}".trim();   // e.g. "7425"
+    let userGuess   = "{{ guess }}".trim();   // e.g. "7525"
+    let prizeCode   = "{{ prize }}";          // "grand", "merch", or "none"
 
     window.addEventListener("DOMContentLoaded", () => {
-      // 1) Let Bloch sphere spin for 2.5 seconds, then stop it
+      // 1) Spin Bloch sphere for 2.5s, then stop
       setTimeout(() => {
         document.getElementById("blochSphere").style.animation = "none";
       }, 2500);
 
-      // 2) Reveal each digit in sequence, coloring green on match, red otherwise
+      // 2) Reveal drawn digits 1 by 1 (green on match, red otherwise)
       for (let i = 0; i < 4; i++) {
         setTimeout(() => {
           const slot = document.getElementById("digit" + i);
@@ -115,22 +72,20 @@
 
           slot.textContent = drawnDigit;
           if (drawnDigit === guessDigit) {
-            // Match → green
-            slot.style.color = "green";
+            slot.style.color = "green";  // match → green
           } else {
-            // No match → red
-            slot.style.color = "red";
+            slot.style.color = "red";    // no match → red
           }
           slot.style.visibility = "visible";
         }, 3000 + i * 700);
       }
 
-      // 3) After all 4 digits are shown, display the prize banner
+      // 3) After all 4 digits appear, show the prize banner
       setTimeout(() => {
         const msgDiv = document.getElementById("prizeMessage");
         if (prizeCode === "grand") {
           msgDiv.textContent = "🎉 Congratulations! You’re a GRAND PRIZE WINNER! 🎉";
-          msgDiv.style.color = "#388E3C";  // green
+          msgDiv.style.color = "#388E3C";  // dark green
         } else if (prizeCode === "merch") {
           msgDiv.textContent = "🥳 Congrats! Your last 3 digits matched—You win merch!";
           msgDiv.style.color = "#1976D2";  // blue

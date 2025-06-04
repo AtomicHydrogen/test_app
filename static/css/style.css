@@ -1,60 +1,92 @@
-/* static/css/style.css */
+/* ──────────────────────────────────────────────────────────────
+   static/css/style.css
+   (Montser­rat, dark theme, plus new guess-slot / guess-digits)
+──────────────────────────────────────────────────────────────── */
 
-/* ─── GLOBAL BODY & CARD STYLING ────────────────────────────────────────────── */
+/* 1) Load Montserrat from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+/* ──────────────────────────────────────────────────────────────
+   2) GLOBAL / BODY STYLING
+──────────────────────────────────────────────────────────────── */
 body {
-  background-color: #f5f5f5;
-  font-family: "Roboto", sans-serif;
+  background-color: #0F1022;                     /* Deep navy/black */
+  font-family: 'Montserrat', sans-serif;          /* Montserrat everywhere */
+  color: #FFFFFF;                                 /* Default text = white */
+  margin: 0;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  margin: 0;
 }
 
+/* ──────────────────────────────────────────────────────────────
+   3) CARD CONTAINER (semi-transparent charcoal)
+──────────────────────────────────────────────────────────────── */
 .card {
-  background: #ffffff;
+  background: rgba(30, 31, 58, 0.85);             /* Translucent charcoal */
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
   padding: 2rem;
   max-width: 360px;
   width: 100%;
   text-align: center;
 }
 
-h1 {
-  font-size: 1.25rem;
-  margin-bottom: 1.5rem;
-  color: #333;
+.card h1 {
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+  color: #FFFFFF;
 }
 
-/* ─── INPUT FIELDS & BUTTONS ────────────────────────────────────────────────── */
+/* ──────────────────────────────────────────────────────────────
+   4) FORM INPUTS & BUTTONS
+──────────────────────────────────────────────────────────────── */
 input[type="email"],
 input[type="text"],
 input[type="number"] {
   width: 100%;
   padding: 0.5rem;
-  border: 1px solid #ddd;
+  border: 1px solid #5C4EFF;                      /* XeedQ purple */
   border-radius: 4px;
   margin-bottom: 1rem;
   font-size: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);     /* Slight translucent */
+  color: #FFFFFF;
   box-sizing: border-box;
 }
 
+input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
 button {
-  background-color: #4285f4;
-  color: #fff;
+  background-color: #5C4EFF;                      /* XeedQ purple */
+  color: #FFFFFF;
   border: none;
   padding: 0.6rem 1.2rem;
   font-size: 1rem;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.2s ease;
 }
 
 button:hover {
-  background-color: #357ae8;
+  background-color: #443CEB;                      /* Darker purple on hover */
 }
 
-/* ─── QR IMAGE & SECRET DISPLAY ─────────────────────────────────────────────── */
+.card a {
+  color: #A7A1FF;
+  text-decoration: none;
+}
+
+.card a:hover {
+  text-decoration: underline;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   5) QR IMAGE & SECRET DISPLAY (if used on show_qr page)
+──────────────────────────────────────────────────────────────── */
 .qr-img {
   margin: 1rem auto;
   width: 200px;
@@ -63,56 +95,97 @@ button:hover {
 
 .secret {
   font-family: monospace;
-  background: #f1f3f4;
+  background: rgba(255, 255, 255, 0.1);
   padding: 0.5rem;
   border-radius: 4px;
   word-break: break-all;
   margin-bottom: 1rem;
+  color: #FFFFFF;
 }
 
-/* ─── ERROR / MESSAGE STYLING ───────────────────────────────────────────────── */
+/* ──────────────────────────────────────────────────────────────
+   6) ERROR / MESSAGE STYLING
+──────────────────────────────────────────────────────────────── */
 .message {
   margin-top: 1rem;
   font-size: 0.95rem;
-  color: #d93025; /* red-ish for errors */
+  color: #FF6B6B;                                  /* Soft red for errors */
 }
 
-/* ─── LOTTO RESULT SPECIFIC ─────────────────────────────────────────────────── */
-/* (You will notice some of these already appear inline in result.html) */
+/* ──────────────────────────────────────────────────────────────
+   7) RESULT-PAGE + LOTTO-PAGE SLOT STYLING
+──────────────────────────────────────────────────────────────── */
 
-.big‐guess {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 3rem;
-  letter-spacing: 0.5rem;
-  margin-bottom: 1rem;
-}
+/* 7a) Remove old big-guess rule (not used any more) */
+/* .big-guess { … }   ← no longer needed  */
 
-.drawn‐digits {
-  display: flex;
-  justify-content: center;
-  margin: 1rem 0;
-}
-
-.digit‐slot {
+/* 7b) Drawn digits (boxes) */
+.digit-slot {
   width: 2.5rem;
   height: 3.5rem;
-  border: 2px solid #333;
+  border: 2px solid #FFFFFF;                      /* White border */
   border-radius: 4px;
   margin: 0 0.5rem;
   font-size: 2rem;
   text-align: center;
   line-height: 3.5rem;
-  background-color: #fff;
-  color: #000;
-  visibility: hidden; /* revealed later by JS */
+  background-color: rgba(255, 255, 255, 0.1);       /* Dark translucent */
+  visibility: hidden;                              /* JS will toggle this */
+  color: #FFFFFF;                                  /* text color overridden by JS (green/red) */
 }
 
-.bloch‐container {
+/* 7c) Container for the drawn result (keeps them horizontal) */
+.drawn-digits {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+
+/* 7d) Live preview of the user’s guess on /lotto (boxes always visible) */
+.preview-container {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+.preview-slot {
+  width: 2.5rem;
+  height: 3.5rem;
+  border: 2px solid #FFFFFF;
+  border-radius: 4px;
+  margin: 0 0.5rem;
+  font-size: 2rem;
+  text-align: center;
+  line-height: 3.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+
+/* 7e) Guess displayed in result page (boxes, identical to digit-slot but always visible) */
+.guess-digits {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+}
+.guess-slot {
+  width: 2.5rem;
+  height: 3.5rem;
+  border: 2px solid #FFFFFF;
+  border-radius: 4px;
+  margin: 0 0.5rem;
+  font-size: 2rem;
+  text-align: center;
+  line-height: 3.5rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+
+/* 7f) Bloch-sphere spin animation */
+.bloch-container {
   text-align: center;
   margin: 1rem auto;
 }
 
-.bloch‐sphere {
+.bloch-sphere {
   width: 150px;
   height: 150px;
   animation: spin 1s linear infinite;
@@ -123,8 +196,21 @@ button:hover {
   to   { transform: rotate(360deg); }
 }
 
-.prize‐message {
+.prize-message {
   font-size: 1.25rem;
   margin-top: 1rem;
-  /* text-color is set dynamically in JS depending on prize */
+  /* color set dynamically by JS (green/blue/red) */
+}
+
+/* ──────────────────────────────────────────────────────────────
+   8) WATERMARK (XeedQ logo) ON EVERY PAGE
+──────────────────────────────────────────────────────────────── */
+.watermark {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  width: 120px;
+  opacity: 0.5;            /* very faint */
+  z-index: 10;              /* always on top */
+  pointer-events: none;     /* never intercept clicks */
 }

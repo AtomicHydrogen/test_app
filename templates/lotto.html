@@ -9,16 +9,61 @@
 <body>
   <div class="card">
     <h1>Quantum Lotto</h1>
+
+    <!-- Show backend-passed error if any -->
     {% if error %}
       <div class="message">{{ error }}</div>
     {% endif %}
-    <form method="post">
-      <input name="guess" type="text" placeholder="Enter 4-digit code" maxlength="4" required>
+
+    <!-- 1) Guess-entry form -->
+    <form method="post" id="guessForm">
+      <!-- Removed letter-spacing; user types normally -->
+      <input
+        name="guess"
+        id="guessInput"
+        type="text"
+        placeholder="Enter 4-digit code"
+        maxlength="4"
+        required
+        autocomplete="off">
       <button type="submit">Draw!</button>
     </form>
+
+    <!-- 2) Live preview of the user’s guess (four dark translucent boxes) -->
+    <div class="preview-container" id="previewContainer">
+      <div class="preview-slot" id="preview0"></div>
+      <div class="preview-slot" id="preview1"></div>
+      <div class="preview-slot" id="preview2"></div>
+      <div class="preview-slot" id="preview3"></div>
+    </div>
+
     <p style="margin-top:1rem; font-size:0.9rem;">
-      <a href="/logout">Log out</a>
+      <a href="/logout">Log Out</a>
     </p>
   </div>
+
+  <!-- XeedQ Logo Watermark (bottom-right) -->
+  <img
+    src="{{ url_for('static', filename='images/xeedq_logo.png') }}"
+    alt="XeedQ Logo Watermark"
+    class="watermark">
+
+  <!-- Live-update script to copy input into preview slots -->
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const inputEl = document.getElementById("guessInput");
+      inputEl.addEventListener("input", () => {
+        const val = inputEl.value.trim();
+        for (let i = 0; i < 4; i++) {
+          const slot = document.getElementById("preview" + i);
+          if (i < val.length && /\d/.test(val.charAt(i))) {
+            slot.textContent = val.charAt(i);
+          } else {
+            slot.textContent = "";   // clear if not yet typed
+          }
+        }
+      });
+    });
+  </script>
 </body>
 </html>
